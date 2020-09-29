@@ -5,7 +5,7 @@
 
 
 
-const int FW_VERSION = 1244;
+const int FW_VERSION = 1245;
 const char* fwBaseUrl = "https://raw.githubusercontent.com/TamojitSaha/esp8266_secure_ota_aws_mqtt/master/fota/";
 
 #ifdef AWS
