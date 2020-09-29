@@ -298,7 +298,7 @@ void loop() {
     uint32_t rand = random16();
     random16_add_entropy(random(65536L));
     //String PID = "A"+(String)random(1,2);
-    snprintf (msg, MSG_BUFFER_SIZE, "@%u,Response:U:%d_L:%d,PID:A3;", rand, random(0, 10), random(0, 10), random(1, 3));
+    snprintf (msg, MSG_BUFFER_SIZE, "@%u,Response:U:%d_L:%d,PID:A4;", rand, random(0, 10), random(0, 10), random(1, 3));
 #else
     snprintf (msg, MSG_BUFFER_SIZE, "%s,PID:A1;", buffer.c_str());
 #endif

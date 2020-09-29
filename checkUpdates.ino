@@ -27,8 +27,9 @@ void checkForUpdates() {
 
       String fwImageURL = fwURL;
       fwImageURL.concat( ".bin" );
+      ESPhttpUpdate.setLedPin(LED_BUILTIN, LOW);
       t_httpUpdate_return ret = ESPhttpUpdate.update(otaClient, fwImageURL );
-
+      
       switch (ret) {
         case HTTP_UPDATE_FAILED:
           Serial.printf("HTTP_UPDATE_FAILD Error (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
