@@ -69,7 +69,16 @@ char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
 void setup_wifi() {
+  uint8_t mac[6];
+  char macAddr[14];
+  WiFi.macAddress( mac );
+  sprintf(macAddr, "% 02X % 02X % 02X % 02X % 02X % 02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  Serial.println(macAddr);
+  String _hostname = "occuGateway:" + (String) mac[3] + (String)mac[4] + (String)mac[5];
+  Serial.print(F("Hostname: ")); Serial.println(_hostname);
+
   WiFi.mode(WIFI_STA);
+  WiFi.hostname(_hostname);
   //WiFi.begin(ssid, password);
   WiFiManager wm;
   bool res;
@@ -164,8 +173,8 @@ void setup() {
   setup_wifi();
 #ifdef AWS
   client.setServer(mqtt_server, 8883);
-//#else
-//  client.setServer(mqtt_server, 1883);
+  //#else
+  //  client.setServer(mqtt_server, 1883);
 #endif
   client.setCallback(callback);
   randomSeed(analogRead(0));
@@ -259,7 +268,7 @@ void loop() {
     reconnect();
   }
   client.loop();
-  
+
 #ifndef SIMULATE
   if (swSer.available() > 0) {
 
