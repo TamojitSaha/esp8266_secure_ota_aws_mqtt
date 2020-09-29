@@ -6,7 +6,7 @@
 
 
 const int FW_VERSION = 1244;
-const char* fwBaseUrl = "http://192.168.0.1/fota/";
+const char* fwBaseUrl = "https://raw.githubusercontent.com/TamojitSaha/esp8266_secure_ota_aws_mqtt/master/fota/";
 
 #ifdef AWS
 const char* mqtt_server = "axcqaksnw49b6-ats.iot.us-east-2.amazonaws.com"; //MQTT broker ip
@@ -22,3 +22,4 @@ const char* debugTopic = "tamojitsaha/mqtt/occupancy/38a5a6247a6a/debug";
 #endif
 const char* subscribeTopic = "tamojitsaha/mqtt/occupancy/38a5a6247a6a/in/led";   //topic for esp8266 to which it will subscribe
 String clientId = "Tamojit-ESP8266-77f8705f-4abd-4930-8e44-38a5a6247a6a";
+ 
