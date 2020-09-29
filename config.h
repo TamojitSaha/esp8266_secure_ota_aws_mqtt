@@ -1,4 +1,4 @@
-//#define SIMULATE
+#define SIMULATE
 #define AWS
 #define OTA
 
@@ -10,12 +10,12 @@ const char* fwBaseUrl = "https://raw.githubusercontent.com/TamojitSaha/esp8266_s
 
 #ifdef AWS
 const char* mqtt_server = "axcqaksnw49b6-ats.iot.us-east-2.amazonaws.com"; //MQTT broker ip
-#else
-const char* mqtt_server = "broker.hivemq.com";//iot.eclipse.org,broker.hivemq.com
+//#else
+//const char* mqtt_server = "broker.hivemq.com";//iot.eclipse.org,broker.hivemq.com
 #endif
 
 #ifdef SIMULATE
-const char* publishTopic = "tamojitsaha/mqtt/occupancy/38a5a6247a6a/counts";      //topic for esp8266 to publish data
+const char* publishTopic = "tamojitsaha/mqtt/occupancy/38a5a6247a6a/simulate";      //topic for esp8266 to publish data
 #else
 const char* publishTopic = "tamojitsaha/mqtt/occupancy/38a5a6247a6a/count";      //topic for esp8266 to publish data
 const char* debugTopic = "tamojitsaha/mqtt/occupancy/38a5a6247a6a/debug";

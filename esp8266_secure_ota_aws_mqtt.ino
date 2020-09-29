@@ -164,8 +164,8 @@ void setup() {
   setup_wifi();
 #ifdef AWS
   client.setServer(mqtt_server, 8883);
-#else
-  client.setServer(mqtt_server, 1883);
+//#else
+//  client.setServer(mqtt_server, 1883);
 #endif
   client.setCallback(callback);
   randomSeed(analogRead(0));
@@ -230,10 +230,10 @@ void setup() {
 #ifdef OTA
   File otaCACert = SPIFFS.open("/githubRootCA.der", "r");
   if (!otaCACert)
-    Serial.println("OTA CA failed");
+    Serial.println(F("OTA CA failed"));
 
   else {
-    Serial.println("OTA CA success");
+    Serial.println(F("OTA CA success"));
     delay(1000);
 
     if (otaClient.loadCACert(otaCACert))
@@ -245,6 +245,8 @@ void setup() {
     Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
   }
 #endif
+
+  checkForUpdates();
 }
 
 
@@ -257,6 +259,8 @@ void loop() {
     reconnect();
   }
   client.loop();
+  
+#ifndef SIMULATE
   if (swSer.available() > 0) {
 
     int code = -1;
@@ -276,30 +280,31 @@ void loop() {
 
     snprintf(dmsg, 30, "@%d, Waiting for data", random(500, 32001));
 
-    Serial.print("Debug: ");
+    Serial.print(F("Debug: "));
     Serial.print(dmsg);
-    Serial.print(", at topic:"); Serial.println(debugTopic);
+    Serial.print(F(", at topic:")); Serial.println(debugTopic);
     client.publish(debugTopic, dmsg);
     delay(200);
   }
-  /*
-    unsigned long now = millis();
-    if (now - lastMsg > 2000) {
+#endif
+
+  unsigned long now = millis();
+  if (now - lastMsg > 2000) {
     lastMsg = now;
     //++value;
     //String uuidStr = ESP8266TrueRandom.uuidToString(uuidNumber);
     //ESP8266TrueRandom.uuid(uuidNumber);
-    #ifdef SIMULATE
+#ifdef SIMULATE
     uint32_t rand = random16();
     random16_add_entropy(random(65536L));
     //String PID = "A"+(String)random(1,2);
-    snprintf (msg, MSG_BUFFER_SIZE, "@%u,Response:U:%d_L:%d,PID:A1;", rand, random(0, 10), random(0, 10), random(1, 3));
-    #else
+    snprintf (msg, MSG_BUFFER_SIZE, "@%u,Response:U:%d_L:%d,PID:A2;", rand, random(0, 10), random(0, 10), random(1, 3));
+#else
     snprintf (msg, MSG_BUFFER_SIZE, "%s,PID:A1;", buffer.c_str());
-    #endif
-    Serial.print("Publish message: ");
+#endif
+    Serial.print(F("Publish message: "));
     Serial.println(msg);
     client.publish(publishTopic, msg);
     memset(_temp, '\0', 30);
-    }*/
+  }
 }
